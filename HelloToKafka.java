@@ -5,12 +5,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.redhat.integration.common.TestClass;
-
 public class HelloToKafka extends RouteBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(HelloToKafka.class);
-
-    TestClass test = new TestClass();
 
     public void configure() throws Exception {
         from("timer:refresh?period=5000&fixedRate=true")
