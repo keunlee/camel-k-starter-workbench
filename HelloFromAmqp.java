@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.qpid.jms.JmsConnectionFactory;
 
-public class HelloToAmqp extends RouteBuilder {
-    private static final Logger LOG = LoggerFactory.getLogger(HelloToAmqp.class);
+public class HelloFromAmqp extends RouteBuilder {
+    private static final Logger LOG = LoggerFactory.getLogger(HelloFromAmqp.class);
 
     @PropertyInject("messaging.broker.url.amqp")
     String messagingBrokerUrl;
@@ -21,10 +21,7 @@ public class HelloToAmqp extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("timer:refresh?period=5000&fixedRate=true")
-        .setBody()
-        .simple("Hello World ${header.firedTime}")
-        .log("${body}")
-        .to("amqp:topic:example?exchangePattern=InOnly&connectionFactory=connectionFactory");
+        from("amqp:topic:example?exchangePattern=InOnly&connectionFactory=connectionFactory")
+        .log("${body}");
     }
 }
