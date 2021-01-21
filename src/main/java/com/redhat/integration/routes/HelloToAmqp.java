@@ -23,7 +23,7 @@ public class HelloToAmqp extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         AnotherTestClass t = new AnotherTestClass();
-        
+
         from("timer:refresh?period=5000&fixedRate=true")
         .setBody()
         .simple("Hello World ${header.firedTime}")
