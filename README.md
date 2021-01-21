@@ -171,6 +171,14 @@ We can push the secret to the cluster using the following command:
 
 With this configuration secret created on the cluster, we have completed the initial steps to get the demo running.
 
+### Say Hello to AMQ
+
+### Say Hello to AMQP
+
+### Say Hello to Kafka
+
+### Say Hello to Knative
+
 ## 4. Uninstall
 
 To cleanup everything, execute the following command:
