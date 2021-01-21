@@ -7,3 +7,9 @@ kamel:
         - github:keunlee:camel-k-starter-workbench
         property-files:
         - application.properties
+      hello-from-amqp:
+        compress-binary: true
+        dependencies:
+        - github:keunlee:camel-k-starter-workbench
+        property-files:
+        - application.properties
