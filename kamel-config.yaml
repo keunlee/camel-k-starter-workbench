@@ -1,0 +1,9 @@
+kamel:
+  run:
+    integration:
+      hello-to-amqp:
+        compress-binary: true
+        dependencies:
+        - github:keunlee:camel-k-starter-workbench
+        property-files:
+        - application.properties
