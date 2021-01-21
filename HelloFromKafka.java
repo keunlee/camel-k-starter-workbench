@@ -1,5 +1,4 @@
 // camel-k: language=java property-file=application.properties
-// camel-k: dependency=github:openshift-integration:camel-k-example-event-streaming
 
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
