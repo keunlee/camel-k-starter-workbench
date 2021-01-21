@@ -1,5 +1,4 @@
 // camel-k: language=java property-file=application.properties
-// camel-k: dependency=github:keunlee:camel-k-starter-workbench
 
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
