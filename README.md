@@ -87,7 +87,7 @@ We switch to the `event-streaming-kafka-cluster` project to create the Kafka clu
 
 The next step is to use the operator to create an AMQ Streams cluster. This can be done with the command:
 
-```oc create -f infra/kafka/clusters/event-streaming-cluster.yaml```
+```oc create -f infra/kafka/kafka-cluster.yaml```
 
 Depending on how large your OpenShift cluster is, this may take a little while to complete. Let's run this command and wait until the cluster is up and running.
 
@@ -103,7 +103,7 @@ Once the AMQ Streams cluster is created. We can proceed to the creation of the A
 
 ```oc get kafkatopics```
 
-At this point, if all goes well, we should our AMQ Streams cluster up and running with several topics.
+At this point, if all goes well, we should see our AMQ Streams cluster up and running with several topics.
 
 ## 2. Creating the AMQ Broker Cluster
 
@@ -113,7 +113,7 @@ To switch to the `event-streaming-messaging-broker` project, run the following c
 
 Having already the operator installed and running on the project, we can proceed to create the broker instance:
 
-```oc create -f infra/messaging/broker/instances/amq-broker-instance.yaml```
+```oc create -f infra/messaging/amq-broker-instance.yaml```
 
 We can use the `oc get activemqartermis` command to check if the AMQ Broker instance is created:
 
@@ -121,7 +121,7 @@ We can use the `oc get activemqartermis` command to check if the AMQ Broker inst
 
 If it was successfully created, then we can create the addresses and queues required for the demo to run:
 
-```oc apply -f infra/messaging/broker/instances/addresses```
+```oc apply -f infra/messaging/addresses```
 
 ## 3. Deploying the Project
 
@@ -140,6 +140,24 @@ When Camel K is installed, you should find an entry related to `red-hat-camel-k-
 ### Initial Configuration
 
 Most of the components of the demo use use the `./application.properties` to read the configurations they need to run. This file already comes with expected defaults, so no action should be needed.
+
+### Development Deployment versus Production Deployment
+
+For all of the examples, you can run them in either development or production mode. 
+
+To run in dev mode: 
+
+```kamel run YourCamelRouter.java --dev```
+
+When running in dev mode, you wil be given a stream of the deployments logs until you hit `ctrl-c` to stop deployment instance.
+
+To run in production mode: 
+
+```kamel run YourCamelRouter.java```
+
+When running production mode, you will not be given a stream of the deployments logs. To view and tail those logs you can observe the logs using the `kubectl logs` command. For example:
+
+```kubectl logs --follow your-camel-router-pod```
 
 #### Optional: Configuration Adjustments
 
@@ -173,22 +191,54 @@ With this configuration secret created on the cluster, we have completed the ini
 
 ### Say Hello to AMQ
 
+To publish to AMQ: 
+
+```kamel run HelloToAmq.java --dev```
+
+To recieve from AMQ: 
+
+```kamel run HelloFromAmq.java --dev```
+
 ### Say Hello to AMQP
+
+To publish to an AMQP topic: 
+
+```kamel run HelloToAmqp.java --dev```
+
+To recieve from AMQP topic: 
+
+```kamel run HelloFromAmqp.java --dev```
 
 ### Say Hello to Kafka
 
+To publish to a Kafka topic: 
+
+```kamel run HelloToKafka.java --dev```
+
+To recieve from a Kafka topic: 
+
+```kamel run HelloFromKafka.java --dev```
+
 ### Say Hello to Knative
 
-## 4. Uninstall
+To publish to a Knative channel: 
 
-To cleanup everything, execute the following command:
+```kamel run HelloToKnative.java --dev```
 
-```oc delete project camel-k-event-streaming event-streaming-messaging-broker event-streaming-kafka-cluster```
+To recieve from a Knative channel: 
 
-## Modeline Github Dependencies
+```kamel run HelloFromKnative.java --dev```
+
+### Modeline Github Dependencies
 
 Github Dependencies in Modeline have the following pattern: 
 
 - `// camel-k: dependency=github:account:repository-name`
 
 - The modeline dependency assumes that the github branch is "master". See `HelloToKafka.java` as an example. 
+
+## 4. Uninstall
+
+To cleanup everything, execute the following command:
+
+```oc delete project camel-k-event-streaming event-streaming-messaging-broker event-streaming-kafka-cluster```
