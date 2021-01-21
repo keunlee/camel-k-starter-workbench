@@ -1,3 +1,5 @@
+package com.redhat.integration.common;
+
 public class AnotherTestClass {
     private String value;
 
