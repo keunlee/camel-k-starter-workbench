@@ -229,14 +229,6 @@ To recieve from a Knative channel:
 
 ```kamel run HelloFromKnative.java --dev```
 
-### Modeline Github Dependencies
-
-Github Dependencies in Modeline have the following pattern: 
-
-- `// camel-k: dependency=github:account:repository-name`
-
-- The modeline dependency assumes that the github branch is "master". See `HelloToKafka.java` as an example. 
-
 ## 4. Uninstall
 
 To cleanup everything, execute the following command:
