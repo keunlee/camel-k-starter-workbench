@@ -1,6 +1,5 @@
 // camel-k: language=java property-file=application.properties
 // camel-k: dependency=mvn:org.apache.activemq:artemis-jms-client:2.11.0.redhat-00005 
-// camel-k: dependency=github:keunlee:camel-k-starter-workbench
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.camel.PropertyInject;
