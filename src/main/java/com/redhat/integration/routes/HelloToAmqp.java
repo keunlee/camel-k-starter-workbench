@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.qpid.jms.JmsConnectionFactory;
 
-import com.redhat.integration.common.TestClass;
+import com.redhat.integration.common.AnotherTestClass;
 
 public class HelloToAmqp extends RouteBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(HelloToAmqp.class);
@@ -22,6 +22,8 @@ public class HelloToAmqp extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        AnotherTestClass t = new AnotherTestClass();
+        
         from("timer:refresh?period=5000&fixedRate=true")
         .setBody()
         .simple("Hello World ${header.firedTime}")

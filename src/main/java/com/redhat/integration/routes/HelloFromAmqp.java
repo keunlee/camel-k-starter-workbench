@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.qpid.jms.JmsConnectionFactory;
 
+import com.redhat.integration.common.AnotherTestClass;
+
 public class HelloFromAmqp extends RouteBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(HelloFromAmqp.class);
 
@@ -20,6 +22,8 @@ public class HelloFromAmqp extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        AnotherTestClass t = new AnotherTestClass();
+
         from("amqp:topic:example?exchangePattern=InOnly&connectionFactory=connectionFactory")
         .log("${body}");
     }
