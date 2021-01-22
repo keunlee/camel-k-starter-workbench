@@ -65,6 +65,12 @@ To recieve from a Knative channel:
 
 ## POJOs with Jitpack and Maven
 
+### Running the Example
+
+To run the example: 
+
+```kamel run HelloJitpackPojos.java --dev```
+
 ### Problem
 
 You want to reference POJOs from separate files w/in you Camel Routes. Prior versions of Camel K, supports this feature. The newest release of Camel K (1.3.0) does NOT support this feature. So how do you seperate POJOs from your Camel Routes? 
@@ -117,9 +123,3 @@ If your Camel Route is not picking up new changes on your Jitpack dependency, yo
 ```kamel rest```
 
 and run your route as you normally would. 
-
-### Running the Example
-
-To run the example: 
-
-```kamel run HelloJitpackPojos.java --dev```
