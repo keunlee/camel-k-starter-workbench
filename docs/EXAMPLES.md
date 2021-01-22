@@ -77,13 +77,13 @@ To run the example:
 
 ### Problem
 
-You want to reference POJOs from separate files w/in you Camel Routes. Prior versions of Camel K, supports this feature. The newest release of Camel K (1.3.0) does NOT support this feature. So how do you seperate POJOs from your Camel Routes? 
+You want to reference POJOs from separate files w/in your Camel Routes. Prior versions of Camel K, support this feature. The newest release of Camel K (1.3.0) does NOT support this feature. So how do you seperate POJOs from your Camel Routes? 
 
 For additional information on this [issue](https://github.com/apache/camel-k/issues/1821).
 
 ### Solution
 
-Check your POJOs as a maven project into a Git repository (i.e. Github) and reference the Git repository as a maven dependency in your Camel K Route. 
+Checkin your POJOs as a maven project into a Git repository (i.e. Github) and reference the Git repository as a maven dependency in your Camel K Route. 
 
 0. Specify `jitpack.io` as a maven repository with your install of the Camel K operator. See [SETUP.md#add-maven-repositories](./SETUP.md#add-maven-repositories)
 
