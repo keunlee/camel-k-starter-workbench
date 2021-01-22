@@ -4,10 +4,10 @@
 
 ```kamel install```
 
-### Local Kubernetes Clusteer (i.e. Kind/K3D) using Docker Container Image Repository
+### Local Kubernetes Clusteer (i.e. Kind/K3D) using a Container Image Repository
 
 ```bash
-# login to docker
+# login to your container image repository (i.e. docker.io)
 docker login docker.io
 
 # create a secret
