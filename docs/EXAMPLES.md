@@ -83,5 +83,26 @@ jdk:
 install:
 - mvn clean install -f ./model/pom.xml
 ```
+2. Add your Git repository to your Camel Route as a maven dependency
 
-2. 
+To obtain the maven depdency to, goto: https://jitpack.io/ and mdofAnnotate your Came Route with your Jitpack dependency. 
+
+3. Make sure to push your latest changes to your Git repository
+
+4. Run your Camel Route: 
+
+```kamel run YourRoute.java --dev```
+
+### Troubleshooting
+
+If your Camel Route is not picking up new changes on your Jitpack dependency, you can refresh your local Camel K Build Kit. To refresh your Routes Build Kit to accept new changes from your Jitpack dependency, run the following to reset the build kit. 
+
+```kamel rest```
+
+and run your route as you normally would. 
+
+### Running the Example
+
+To run the example: 
+
+```kamel run HelloJitpackPojos.java --dev```
