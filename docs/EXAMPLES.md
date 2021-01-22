@@ -101,10 +101,6 @@ install:
 ```java
 // camel-k: dependency=github:keunlee/camel-k-starter-workbench:main-SNAPSHOT
 
-import java.text.MessageFormat;
-
-...
-
 public class YourRoute extends RouteBuilder {...}
 ```
 
