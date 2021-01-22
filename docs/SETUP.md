@@ -159,24 +159,6 @@ When Camel K is installed, you should find an entry related to `red-hat-camel-k-
 
 Most of the components of the demo use use the `./application.properties` to read the configurations they need to run. This file already comes with expected defaults, so no action should be needed.
 
-### Development Deployment versus Production Deployment
-
-For all of the examples, you can run them in either development or production mode. 
-
-To run in dev mode: 
-
-```kamel run YourCamelRouter.java --dev```
-
-When running in dev mode, you wil be given a stream of the deployments logs until you hit `ctrl-c` to stop deployment instance.
-
-To run in production mode: 
-
-```kamel run YourCamelRouter.java```
-
-When running production mode, you will not be given a stream of the deployments logs. To view and tail those logs you can observe the logs using the `kubectl logs` command. For example:
-
-```kubectl logs --follow your-camel-router-pod```
-
 #### Optional: Configuration Adjustments
 
 *Note*: you can skip this step if you don't want to adjust the configuration
