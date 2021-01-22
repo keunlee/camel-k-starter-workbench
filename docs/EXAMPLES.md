@@ -48,6 +48,11 @@ To recieve from a Kafka topic:
 
 ### Say Hello to Knative
 
+This service leverages [knative eventing channels](https://knative.dev/docs/eventing/channels/) to operate. Therefore, we need to create
+them on the OpenShift cluster. To do so we can execute the following command:
+
+```oc apply -f infra/knative/channels/messages-channel.yaml```
+
 To publish to a Knative channel: 
 
 ```kamel run HelloToKnative.java --dev```
