@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.redhat.integration.common.TestClass001;
 import com.redhat.integration.common.TestClass002;
+import com.redhat.integration.common.TestClass003;
 
 public class HelloJitpackPojos extends RouteBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(HelloJitpackPojos.class);
@@ -20,8 +21,11 @@ public class HelloJitpackPojos extends RouteBuilder {
         TestClass002 t2 = new TestClass002();
         t2.setValue("BLUE");
 
+        TestClass003 t3 = new TestClass003();
+        t2.setValue("BLUE");
+
         String formattedValue = 
-            MessageFormat.format("{0} & {1}", t1.getValue(), t2.getValue()).toString();
+            MessageFormat.format("{0} & {1} & {2}", t1.getValue(), t2.getValue(), t3.getValue()).toString();
 
         from("timer:refresh?period=5000&fixedRate=true")
         .setBody()
