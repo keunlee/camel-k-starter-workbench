@@ -5,6 +5,9 @@ import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import model.src.main.java.com.redhat.integration.common.TestClass001;
+
 import org.apache.qpid.jms.JmsConnectionFactory;
 
 public class HelloFromAmqp extends RouteBuilder {
@@ -20,6 +23,9 @@ public class HelloFromAmqp extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        TestClass001 t = new TestClass001();
+        t.setValue("setting values");
+
         from("amqp:topic:example?exchangePattern=InOnly&connectionFactory=connectionFactory")
         .log("${body}");
     }
