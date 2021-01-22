@@ -1,4 +1,6 @@
-### Development Deployment versus Production Deployment
+# Running the Examples
+
+## Development Deployment versus Production Deployment
 
 For all of the examples, you can run them in either development or production mode. 
 
@@ -16,7 +18,7 @@ When running production mode, you will not be given a stream of the deployments 
 
 ```kubectl logs --follow your-camel-router-pod```
 
-### Say Hello to AMQ
+## Say Hello to AMQ
 
 To publish to AMQ: 
 
@@ -26,7 +28,7 @@ To recieve from AMQ:
 
 ```kamel run HelloFromAmq.java --dev```
 
-### Say Hello to AMQP
+## Say Hello to AMQP
 
 To publish to an AMQP topic: 
 
@@ -36,7 +38,7 @@ To recieve from AMQP topic:
 
 ```kamel run HelloFromAmqp.java --dev```
 
-### Say Hello to Kafka
+## Say Hello to Kafka
 
 To publish to a Kafka topic: 
 
@@ -46,7 +48,7 @@ To recieve from a Kafka topic:
 
 ```kamel run HelloFromKafka.java --dev```
 
-### Say Hello to Knative
+## Say Hello to Knative
 
 This service leverages [knative eventing channels](https://knative.dev/docs/eventing/channels/) to operate. Therefore, we need to create
 them on the OpenShift cluster. To do so we can execute the following command:
