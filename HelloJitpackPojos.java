@@ -22,7 +22,7 @@ public class HelloJitpackPojos extends RouteBuilder {
         t2.setValue("BLUE");
 
         TestClass003 t3 = new TestClass003();
-        t2.setValue("BLUE");
+        t3.setValue("GREEN");
 
         String formattedValue = 
             MessageFormat.format("{0} & {1} & {2}", t1.getValue(), t2.getValue(), t3.getValue()).toString();
