@@ -1,6 +1,6 @@
 # Running the Examples
 
-## Development Deployment versus Production Deployment
+## Deployment Modes
 
 For all of the examples, you can run them in either development or production mode. 
 
