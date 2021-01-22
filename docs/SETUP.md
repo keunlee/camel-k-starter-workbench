@@ -7,12 +7,23 @@ You need to create a new project named `camel-k-event-streaming` for running thi
 ## Installing the Camel K Operator - Openshift - Operator Hub
 
 You need to install the Camel K operator in the `camel-k-event-streaming` project. To do so, go to the OpenShift 4.x web console, login with a cluster admin account and use the OperatorHub menu item on the left to find and install **"Red Hat Integration - Camel K"**. You will be given the option to install it globally on the cluster or on a specific namespace.
+
 If using a specific namespace, make sure you select the `camel-k-event-streaming` project from the dropdown list.
 This completes the installation of the Camel K operator (it may take a couple of minutes).
 
 When the operator is installed, from the OpenShift Help menu ("?") at the top of the WebConsole, you can access the "Command Line Tools" page, where you can download the **"kamel"** CLI, that is required for running this example. The CLI must be installed in your system path.
 
 Refer to the **"Red Hat Integration - Camel K"** documentation for a more detailed explanation of the installation steps for the operator and the CLI.
+
+### Add Maven Repositories
+
+Add support for the following maven repositories, by running the following command: 
+
+```bash
+kamel install --skip-operator-setup --skip-cluster-setup --maven-repository https://maven.repository.redhat.com/ga --maven-repository  https://jitpack.io
+```
+
+This will make dependencies from the above repositories available. It will NOT reinstall the Camel K operator instance.
 
 ## Installing the AMQ Streams Operator
 

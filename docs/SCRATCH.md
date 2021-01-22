@@ -2,7 +2,9 @@
 
 ### Openshift
 
-```kamel install```
+```bash
+kamel install --maven-repository https://maven.repository.redhat.com/ga --maven-repository  https://jitpack.io
+```
 
 ### Local Kubernetes Clusteer (i.e. Kind/K3D) using a Container Image Repository
 
