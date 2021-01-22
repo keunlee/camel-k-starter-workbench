@@ -9,6 +9,7 @@ This section covers the following requirements in preparation to run these examp
 - Install and Setup of the Camel K Operator
 - Install and Setup of the AMQ Streams Operator
 - Install and Setup of the AMQ Broker Operator
+- Install and Setup of the Openshift Serverless Operator
 
 ## [2. Running the Examples](docs/EXAMPLES.md)
 
