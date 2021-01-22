@@ -8,13 +8,17 @@ To run in dev mode:
 
 ```kamel run YourCamelRouter.java --dev```
 
-When running in dev mode, you wil be given a stream of the deployments logs until you hit `ctrl-c` to stop deployment instance.
+When running in dev mode, your deployment will persist until you hit `ctrl-c`, which will stop your deployment instance.
 
 To run in production mode: 
 
 ```kamel run YourCamelRouter.java```
 
-When running production mode, you will not be given a stream of the deployments logs. To view and tail those logs you can observe the logs using the `kubectl logs` command. For example:
+When running production mode, your route will be deployed to your cluster. 
+
+# Deployment Logs
+
+To view and tail deployment logs you can observe the logs using the `kubectl logs` command. For example:
 
 ```kubectl logs --follow your-camel-router-pod```
 
