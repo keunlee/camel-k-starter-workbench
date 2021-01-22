@@ -69,6 +69,8 @@ To recieve from a Knative channel:
 
 You want to reference POJOs from separate files w/in you Camel Routes. Prior versions of Camel K, supports this feature. The newest release of Camel K (1.3.0) does NOT support this feature. So how do you seperate POJOs from your Camel Routes? 
 
+For additional information on this [issue](https://github.com/apache/camel-k/issues/1821).
+
 ### Solution
 
 Check your POJOs as a maven project into a Git repository (i.e. Github) and reference the Git repository as a maven dependency in your Camel K Route. 
@@ -83,7 +85,7 @@ jdk:
 install:
 - mvn clean install -f ./model/pom.xml
 ```
-2. Add your Git repository to your Camel Route as a maven dependency. To obtain the maven depdency to, goto: https://jitpack.io/ and end enter your Git repository's uri to publish it to generate a maven dependency. 
+2. Add your Git repository to your Camel Route as a maven dependency. To obtain the maven depdency to, goto: https://jitpack.io/ and enter your Git repository's uri to publish it to generate a maven dependency. 
 
 ```xml
 <!-- example -->
