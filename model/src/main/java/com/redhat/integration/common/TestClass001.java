@@ -1,4 +1,4 @@
-package model.src.main.java.com.redhat.integration.common;
+package com.redhat.integration.common;
 
 public class TestClass001 {
     private String value;
