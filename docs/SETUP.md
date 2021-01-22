@@ -14,26 +14,6 @@ When the operator is installed, from the OpenShift Help menu ("?") at the top of
 
 Refer to the **"Red Hat Integration - Camel K"** documentation for a more detailed explanation of the installation steps for the operator and the CLI.
 
-## Installing the Camel K Operator - CLI
-
-### Openshift
-
-```kamel install```
-
-### Kind/K3D using Docker Container Image Repository
-
-```bash
-# login to docker
-docker login docker.io
-
-# create a secret
-kubectl create secret generic container-registry-secret --from-file ~/.docker/config.json
-```
-
-```bash
-kamel install --maven-repository https://maven.repository.redhat.com/ga --maven-repository  https://jitpack.io --registry docker.io --organization <docker.io.username> --registry-secret container-registry-secret
- ```
-
 ## Installing the AMQ Streams Operator
 
 This example uses AMQ Streams, Red Hat's data streaming platform based on Apache Kafka.
