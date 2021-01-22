@@ -83,13 +83,32 @@ jdk:
 install:
 - mvn clean install -f ./model/pom.xml
 ```
-2. Add your Git repository to your Camel Route as a maven dependency
+2. Add your Git repository to your Camel Route as a maven dependency. To obtain the maven depdency to, goto: https://jitpack.io/ and end enter your Git repository's uri to publish it to generate a maven dependency. 
 
-To obtain the maven depdency to, goto: https://jitpack.io/ and mdofAnnotate your Came Route with your Jitpack dependency. 
+```xml
+<!-- example -->
+<dependency>
+    <groupId>com.github.keunlee</groupId>
+    <artifactId>camel-k-starter-workbench</artifactId>
+    <version>main-SNAPSHOT</version>
+</dependency>
+```
 
-3. Make sure to push your latest changes to your Git repository
+3. Annotate your Camel K Route file with the following dependency: 
 
-4. Run your Camel Route: 
+```java
+// camel-k: dependency=github:keunlee/camel-k-starter-workbench:main-SNAPSHOT
+
+import java.text.MessageFormat;
+
+...
+
+public class YourRoute extends RouteBuilder {...}
+```
+
+4. Push your latest changes to your Git repository
+
+5. Run your Camel Route: 
 
 ```kamel run YourRoute.java --dev```
 
