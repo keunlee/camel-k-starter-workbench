@@ -1,142 +1,111 @@
-## Preparing the cluster
+## 3. Deploying the Project
 
-This example can be run on any OpenShift 4.3+ cluster or a local development instance (such as [CRC](https://github.com/code-ready/crc)). Ensure that you have a cluster available and login to it using the OpenShift `oc` command line tool.
+Now that the infrastructure is ready, we can go ahead and deploy the demo project. First, lets switch to the main project:
 
-You need to create a new project named `camel-k-event-streaming` for running this example. This can be done directly from the OpenShift web console or by executing the command `oc new-project camel-k-event-streaming` on a terminal window.
+```oc project camel-k-event-streaming```
 
-### Installing the Camel K Operator - Openshift - Operator Hub
+We should now check that the operator is installed. To do so, execute the following command on a terminal:
 
-You need to install the Camel K operator in the `camel-k-event-streaming` project. To do so, go to the OpenShift 4.x web console, login with a cluster admin account and use the OperatorHub menu item on the left to find and install **"Red Hat Integration - Camel K"**. You will be given the option to install it globally on the cluster or on a specific namespace.
-If using a specific namespace, make sure you select the `camel-k-event-streaming` project from the dropdown list.
-This completes the installation of the Camel K operator (it may take a couple of minutes).
-
-When the operator is installed, from the OpenShift Help menu ("?") at the top of the WebConsole, you can access the "Command Line Tools" page, where you can download the **"kamel"** CLI, that is required for running this example. The CLI must be installed in your system path.
-
-Refer to the **"Red Hat Integration - Camel K"** documentation for a more detailed explanation of the installation steps for the operator and the CLI.
-
-### Installing the Camel K Operator - CLI
-
-#### Openshift
-
-```kamel install```
-
-#### Kind/K3D using Docker Container Image Repository
-
-```bash
-# login to docker
-docker login docker.io
-
-# create a secret
-kubectl create secret generic container-registry-secret --from-file ~/.docker/config.json
+```
+oc get csv
 ```
 
-```bash
-kamel install --maven-repository https://maven.repository.redhat.com/ga --maven-repository  https://jitpack.io --registry docker.io --organization <docker.io.username> --registry-secret container-registry-secret
- ```
+When Camel K is installed, you should find an entry related to `red-hat-camel-k-operator` in phase `Succeeded`.
 
-### Installing the AMQ Streams Operator
+### Initial Configuration
 
-This example uses AMQ Streams, Red Hat's data streaming platform based on Apache Kafka.
-We want to install it on a new project named `event-streaming-kafka-cluster`. 
+Most of the components of the demo use use the `./application.properties` to read the configurations they need to run. This file already comes with expected defaults, so no action should be needed.
 
-You need to create the `event-streaming-kafka-cluster` project from the OpenShift web console or by executing the command `oc new-project event-streaming-kafka-cluster` on a terminal window. 
+### Development Deployment versus Production Deployment
 
-Now, we can go to the OpenShift 4.x WebConsole page, use the OperatorHub menu item on the left hand side menu and use it to find and install **"Red Hat Integration - AMQ Streams"**.
-This will install the operator and may take a couple minutes to install.
+For all of the examples, you can run them in either development or production mode. 
 
-### Installing the AMQ Broker Operator
+To run in dev mode: 
 
-The installation of the AMQ Broker follows the same isolation pattern as the AMQ Streams one. We will deploy it in a separate project and will
-instruct the operator to deploy a broker according to the configuration.
+```kamel run YourCamelRouter.java --dev```
 
-You need to create the `event-streaming-messaging-broker` project from the OpenShift web console or by executing the command `oc new-project event-streaming-messaging-broker` on a terminal window. 
+When running in dev mode, you wil be given a stream of the deployments logs until you hit `ctrl-c` to stop deployment instance.
 
-Now, we can go to the OpenShift 4.x WebConsole page, use the OperatorHub menu item on the left hand side menu and use it to find and install **"Red Hat Integration - AMQ Broker"**.
-This will install the operator and may take a couple minutes to install.
+To run in production mode: 
 
-### Installing OpenShift Serverless
+```kamel run YourCamelRouter.java```
 
-This demo also needs OpenShift Serverless (Knative) installed and working.
+When running production mode, you will not be given a stream of the deployments logs. To view and tail those logs you can observe the logs using the `kubectl logs` command. For example:
 
-Go to the OpenShift 4.x WebConsole page, use the OperatorHub menu item on the left hand side then find and install **"OpenShift Serverless"** 
-from a channel that best matches your OpenShift version.
+```kubectl logs --follow your-camel-router-pod```
 
-The operator installation page reports links to the documentation where you can find information about **additional steps** that must
-be done in order to have OpenShift serverless completely installed into your cluster.
+#### Optional: Configuration Adjustments
 
-Make sure you follow all the steps in the documentation before continuing to the next section.
+*Note*: you can skip this step if you don't want to adjust the configuration
 
-## Requirements
+In case you need to adjust the configuration, the following 2 commands present information that will be required to configure the deployment:
 
-**OpenShift CLI ("oc")**
+```oc get services -n event-streaming-messaging-broker```
 
-The OpenShift CLI tool ("oc") will be used to interact with the OpenShift cluster.
+```oc get services -n event-streaming-kafka-cluster```
 
-**Connection to an OpenShift cluster**
+They provide the addresses of the services running on the cluster and can be used to fill in the values on the properties file.
 
-In order to execute this demo, you will need to have an OpenShift cluster with the correct access level, the ability to create projects and install operators as well as the Apache Camel K CLI installed on your local system.
+We start by opening the file `./application.properties` and editing the parameters. The content needs to be adjusted to point to the correct addresses of the brokers. It should be similar to this:
 
-**Apache Camel K CLI ("kamel")**
+```
+kafka.bootstrap.address=event-streaming-kafka-cluster-kafka-bootstrap.event-streaming-kafka-cluster:9092
+messaging.broker.url=tcp://broker-hdls-svc.event-streaming-messaging-broker:61616
+```
 
-Apart from the support provided by the VS Code extension, you also need the Apache Camel K CLI ("kamel") in order to
-access all Camel K features.
+#### Creating the Secret
 
-**Knative installed on the OpenShift cluster**
+One of the components simulates receiving data from users and, in order to do so, authenticate the users. Because we normally don't want the credentials to be easily
+accessible, it simulates checking the access control by reading a secret.
 
-The cluster also needs to have Knative installed and working. Refer to steps above for information on how to install it in your cluster.
+We can push the secret to the cluster using the following command:
 
-### Optional Requirements
+```oc create secret generic example-event-streaming-user-reporting --from-file application.properties```
 
-The following requirements are optional. They don't prevent the execution of the demo, but may make it easier to follow.
+With this configuration secret created on the cluster, we have completed the initial steps to get the demo running.
 
-**VS Code Extension Pack for Apache Camel**
+### Say Hello to AMQ
 
-The VS Code Extension Pack for Apache Camel by Red Hat provides a collection of useful tools for Apache Camel K developers,
-such as code completion and integrated lifecycle management. They are **recommended** for the tutorial, but they are **not**
-required.
+To publish to AMQ: 
 
-You can install it from the VS Code Extensions marketplace.
+```kamel run HelloToAmq.java --dev```
 
-## 1. Creating the AMQ Streams Cluster
+To recieve from AMQ: 
 
-We switch to the `event-streaming-kafka-cluster` project to create the Kafka cluster:
+```kamel run HelloFromAmq.java --dev```
 
-```oc project event-streaming-kafka-cluster```
+### Say Hello to AMQP
 
-The next step is to use the operator to create an AMQ Streams cluster. This can be done with the command:
+To publish to an AMQP topic: 
 
-```oc create -f infra/kafka/kafka-cluster.yaml```
+```kamel run HelloToAmqp.java --dev```
 
-Depending on how large your OpenShift cluster is, this may take a little while to complete. Let's run this command and wait until the cluster is up and running.
+To recieve from AMQP topic: 
 
-```oc wait kafka/event-streaming-kafka-cluster --for=condition=Ready --timeout=600s```
+```kamel run HelloFromAmqp.java --dev```
 
-You can can check the state of the cluster by running the following command:
+### Say Hello to Kafka
 
-```oc get kafkas -n event-streaming-kafka-cluster event-streaming-kafka-cluster```
+To publish to a Kafka topic: 
 
-Once the AMQ Streams cluster is created. We can proceed to the creation of the AMQ Streams topics:
+```kamel run HelloToKafka.java --dev```
 
-```oc apply -f infra/kafka/clusters/topics/```
+To recieve from a Kafka topic: 
 
-```oc get kafkatopics```
+```kamel run HelloFromKafka.java --dev```
 
-At this point, if all goes well, we should see our AMQ Streams cluster up and running with several topics.
+### Say Hello to Knative
 
-## 2. Creating the AMQ Broker Cluster
+To publish to a Knative channel: 
 
-To switch to the `event-streaming-messaging-broker` project, run the following command:
+```kamel run HelloToKnative.java --dev```
 
-```oc project event-streaming-messaging-broker```
+To recieve from a Knative channel: 
 
-Having already the operator installed and running on the project, we can proceed to create the broker instance:
+```kamel run HelloFromKnative.java --dev```
 
-```oc create -f infra/messaging/amq-broker-instance.yaml```
+## 4. Uninstall
 
-We can use the `oc get activemqartermis` command to check if the AMQ Broker instance is created:
+To cleanup everything, execute the following command:
 
-```oc get activemqartemises```
-
-If it was successfully created, then we can create the addresses and queues required for the demo to run:
-
-```oc apply -f infra/messaging/addresses```
+```oc delete project camel-k-event-streaming event-streaming-messaging-broker event-streaming-kafka-cluster```
