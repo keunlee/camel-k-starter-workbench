@@ -1,4 +1,4 @@
-## Preparing the cluster
+## Preparing the Cluster
 
 You need to create a new project named `camel-k-event-streaming` for running this example. This can be done directly from the OpenShift web console or by executing the command `oc new-project camel-k-event-streaming` on a terminal window.
 
