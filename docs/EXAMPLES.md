@@ -62,3 +62,26 @@ To publish to a Knative channel:
 To recieve from a Knative channel: 
 
 ```kamel run HelloFromKnative.java --dev```
+
+## POJOs with Jitpack and Maven
+
+### Problem
+
+You want to reference POJOs from separate files w/in you Camel Routes. Prior versions of Camel K, supports this feature. The newest release of Camel K (1.3.0) does NOT support this feature. So how do you seperate POJOs from your Camel Routes? 
+
+### Solution
+
+Check your POJOs as a maven project into a Git repository (i.e. Github) and reference the Git repository as a maven dependency in your Camel K Route. 
+
+0. Specify `jitpack.io` as a maven repository with your install of the Camel K operator. See [SETUP.md](SETUP.md)
+
+1. Add a `jitpack.yml` at the root of your repository. For this project, our maven project is located in the `./models` directory as a maven project.
+
+```yaml
+jdk:
+- openjdk11
+install:
+- mvn clean install -f ./model/pom.xml
+```
+
+2. 
