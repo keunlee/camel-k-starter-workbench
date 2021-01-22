@@ -16,7 +16,7 @@ To run in production mode:
 
 When running production mode, your route will be deployed to your cluster. 
 
-# Deployment Logs
+## Deployment Logs
 
 To view and tail deployment logs you can observe the logs using the `kubectl logs` command. For example:
 
