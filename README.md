@@ -4,6 +4,15 @@ These samples show how Camel K can be used as glue for connecting various eventi
 
 ## [1. Preparing the Cluster](docs/SETUP.md)
 
-These examples can be run on any OpenShift 4.3+ cluster or a local development instance (such as [CRC](https://github.com/code-ready/crc)). Ensure that you have a cluster available and login to it using the OpenShift `oc` command line tool.
+This section covers the following requirements in preparation to run these examples: 
+
+- Install and Setup of the Camel K Operator
+- Install and Setup of the AMQ Streams Operator
+- Install and Setup of the AMQ Broker Operator
 
 ## [2. Running the Examples](docs/EXAMPLES.md)
+
+This section demonstrates various Camel K use-case demonstrations. They are meant to be targeted and minimal to illustrate how to use some of the components of Camel K to demonstrate the following: 
+
+- Event Streaming Options
+- Pojo Integration Options
