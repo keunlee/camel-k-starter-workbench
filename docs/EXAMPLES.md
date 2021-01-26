@@ -124,6 +124,6 @@ public class YourRoute extends RouteBuilder {...}
 
 If your Camel Route is not picking up new changes on your Jitpack dependency, you can refresh your local Camel K Build Kit. To refresh your Routes Build Kit to accept new changes from your Jitpack dependency, run the following to reset the build kit. 
 
-```kamel rest```
+```kamel reset```
 
 and run your route as you normally would. 
